@@ -1,22 +1,17 @@
 /**
 * @file main.cpp
-* @brief 双方向リストクラス
+* @brief メイン関数
 * @author 村上輝
 * @date 2023/10/17/15:00
-* @details 課題1_3「双方向リストのテンプレート化」
+* @details  課題1_3「双方向リストのテンプレート化」
+			テキストファイルを読み込み、その内容をリストに格納し、順に表示しています。\n
 */
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "doublyLinkedList.h"
-
-// 成績データ
-struct RecordData
-{
-	int m_score; // スコア
-	std::string m_name; // 名前
-};
+#include "recordData.h"
 
 int main()
 {

@@ -1,25 +1,21 @@
 /**
 * @file doublyLinkedList.inl
-* @brief 双方向リストクラス
+* @brief 双方向リストクラス実装
 * @author 村上輝
-* @date 2023/10/17/15:00
+* @date 2023/10/19/11:30
 * @details 課題1_3「双方向リストのテンプレート化」
 */
 
 #pragma once
 
 #include <assert.h>
-#include <string>
 #include "doublyLinkedList.h"
 
 //===============================================================
 /*双方向リストクラス*/
 
-/**
-* @brief 双方向リストクラスのコンストラクタ
-* @details データ数、ダミーノードを初期化\n
-		   リストが空の場合、ダミーノードの前後はダミーノード自身を参照\n
-*/
+
+// 双方向リストクラスのコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::DoublyLinkedList() : m_DataNum(0)
 {
@@ -28,10 +24,7 @@ inline DoublyLinkedList<DATA>::DoublyLinkedList() : m_DataNum(0)
 	m_DummyNode->m_prev = m_DummyNode;
 }
 
-/**
-* @brief 双方向リストクラスのデストラクタ
-* @details 先頭から末尾までdelete
-*/
+// 双方向リストクラスのデストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::~DoublyLinkedList()
 {
@@ -42,25 +35,17 @@ inline DoublyLinkedList<DATA>::~DoublyLinkedList()
 		node = node->m_next;
 		delete temp;
 	}
+	delete m_DummyNode;
 }
 
-/**
-* @brief データ数の取得
-* @return リストのデータの総数を返す
-*/
+// データ数の取得
 template<typename DATA>
 inline int DoublyLinkedList<DATA>::GetDataNum() const
 {
 	return m_DataNum;
 }
 
-/**
-* @brief データの挿入
-* @param[in] it 挿入したい位置のイテレータ
-* @param[in] data 挿入したい成績データ
-* @return bool(挿入が成功すればtrue、失敗すればfalse)
-* @details イテレータの指すノードの前に挿入する
-*/
+// データの挿入
 template<typename DATA>
 inline bool DoublyLinkedList<DATA>::Insert(ConstIterator & it, const DATA & data)
 {
@@ -89,11 +74,7 @@ inline bool DoublyLinkedList<DATA>::Insert(ConstIterator & it, const DATA & data
 	return true;
 }
 
-/**
-* @brief データの追加
-* @param[in] data 追加したい成績データ
-* @details 末尾にデータの追加
-*/
+// データの追加
 template<typename DATA>
 inline void DoublyLinkedList<DATA>::PushBack(const DATA & data)
 {
@@ -101,13 +82,7 @@ inline void DoublyLinkedList<DATA>::PushBack(const DATA & data)
 	Insert(endIt, data);
 }
 
-/**
-* @brief データの削除
-* @param[in] it 削除したい位置のイテレータ
-* @return 削除に失敗したらfalse、成功したらtrueを返す
-* @details イテレータの指すノードを削除\n
-			データ数が0、イテレータの指すノードがダミーノード、別リストを指すイテレータであれば何も行わない\n
-*/
+// データの削除
 template<typename DATA>
 inline bool DoublyLinkedList<DATA>::Remove(ConstIterator & it)
 {
@@ -125,40 +100,28 @@ inline bool DoublyLinkedList<DATA>::Remove(ConstIterator & it)
 	return true;
 }
 
-/**
-* @brief 先頭イテレータ取得
-* @return ダミーノードの次のノード(先頭のイテレータを返す)
-*/
+// 先頭イテレータ取得
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::Iterator DoublyLinkedList<DATA>::GetBegin()
 {
 	return Iterator(m_DummyNode->m_next, this);
 }
 
-/**
-* @brief 先頭コンストイテレータ取得
-* @return ダミーノードの次のノード(先頭のコンストイテレータを返す)
-*/
+// 先頭コンストイテレータ取得
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::GetCBegin() const
 {
 	return ConstIterator(m_DummyNode->m_next, this);
 }
 
-/**
-* @brief 末尾イテレータ取得
-* @return ダミーノードを返す
-*/
+// 末尾イテレータ取得
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::Iterator DoublyLinkedList<DATA>::GetEnd()
 {
 	return Iterator(m_DummyNode, this);
 }
 
-/**
-* @brief 末尾コンストイテレータ取得
-* @return ダミーノードを返す
-*/
+// 末尾コンストイテレータ取得
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::GetCEnd() const
 {
@@ -171,32 +134,19 @@ inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::Ge
 //===============================================================
 /*コンストイテレータ*/
 
-/**
-* @brief 引数無しコンストラクタ
-*/
+// 引数無しコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::ConstIterator::ConstIterator() : m_Node(nullptr), m_List(nullptr) {}
 
-/**
-* @brief 引数付きコンストラクタ
-* @param[in] node イテレータの指す要素
-* @param[in] list リストの参照
-*/
+// 引数付きコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::ConstIterator::ConstIterator(Node * node, const DoublyLinkedList* list) : m_Node(node), m_List(list) {}
 
-/**
-* @brief コピーコンストラクタ
-* @param[in] it コピー元のコンストイテレータ
-*/
+// コピーコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::ConstIterator::ConstIterator(const ConstIterator& it) : m_Node(it.m_Node), m_List(it.m_List) {}
 
-/**
-* @brief イテレータの先頭に向かってひとつ進める(前置)
-* @return 先頭にひとつ進めたイテレータを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの先頭に向かってひとつ進める(前置)
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::ConstIterator::operator--()
 {
@@ -206,11 +156,7 @@ inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::C
 	return *this;
 }
 
-/**
-* @brief イテレータの先頭に向かってひとつ進める(後置)
-* @return 先頭にひとつ進めたイテレータを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの先頭に向かってひとつ進める(後置)
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::ConstIterator::operator--(int)
 {
@@ -221,11 +167,7 @@ inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::Co
 	return ci;
 }
 
-/**
-* @brief イテレータの末尾に向かってひとつ進める(前置)
-* @return 末尾にひとつ進めたイテレータを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの末尾に向かってひとつ進める(前置)
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::ConstIterator::operator++()
 {
@@ -235,11 +177,7 @@ inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::C
 	return *this;
 }
 
-/**
-* @brief イテレータの末尾に向かってひとつ進める(後置)
-* @return 末尾にひとつ進めたイテレータを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの末尾に向かってひとつ進める(後置)
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::ConstIterator::operator++(int)
 {
@@ -250,11 +188,7 @@ inline typename DoublyLinkedList<DATA>::ConstIterator DoublyLinkedList<DATA>::Co
 	return ci;
 }
 
-/**
-* @brief イテレータの指す要素を取得する(const)
-* @return イテレータの指す成績データを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの指す要素を取得する(const)
 template<typename DATA>
 inline const DATA DoublyLinkedList<DATA>::ConstIterator::operator*() const
 {
@@ -263,11 +197,7 @@ inline const DATA DoublyLinkedList<DATA>::ConstIterator::operator*() const
 	return this->m_Node->m_data;
 }
 
-/**
-* @brief 代入を行う
-* @param[in] it 代入するイテレータ
-* @details イテレータのノードを代入する
-*/
+// 代入を行う
 template<typename DATA>
 inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::ConstIterator::operator=(const ConstIterator & it)
 {
@@ -275,63 +205,31 @@ inline typename DoublyLinkedList<DATA>::ConstIterator& DoublyLinkedList<DATA>::C
 	return *this;
 }
 
-/**
-* @brief 同一か比較する
-* @param[in] it 同一か比較するイテレータ
-* @return イテレータの指す要素が同一であればtrueを返す
-*/
+// 同一か比較する
 template<typename DATA>
 inline bool DoublyLinkedList<DATA>::ConstIterator::operator==(const ConstIterator & it)
 {
 	return (m_Node == it.m_Node);
 }
 
-/**
-* @brief 異なるか比較する
-* @param[in] it 異なるか比較するイテレータ
-* @return イテレータの指す要素が異なればtrueを返す
-*/
+// 異なるか比較する
 template<typename DATA>
 inline bool DoublyLinkedList<DATA>::ConstIterator::operator!=(const ConstIterator & it)
 {
 	return (m_Node != it.m_Node);
 }
 
-/**
-* @brief イテレータの指すノードがダミーノードか判別する
-* @return もしダミーノードであればtrueを返す
-* @details テストでダミーノードと比較する際に使用
-*/
-template<typename DATA>
-inline bool DoublyLinkedList<DATA>::ConstIterator::CheckDummyNode()
-{
-	if (this->m_Node == m_List->m_DummyNode)
-		return true;
-	else
-		return false;
-}
-
 //===============================================================
 /*イテレータ*/
-/**
-* @brief 引数無しコンストラクタ
-*/
+// 引数無しコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::Iterator::Iterator() : ConstIterator() {}
 
-/**
-* @brief 引数付きコンストラクタ
-* @param[in] node イテレータの指す要素
-* @param[in] list リストの参照
-*/
+// 引数付きコンストラクタ
 template<typename DATA>
 inline DoublyLinkedList<DATA>::Iterator::Iterator(Node * node, const DoublyLinkedList* list) : ConstIterator(node, list) {}
 
-/**
-* @brief イテレータの指す要素を取得する(非const)
-* @return イテレータの指す成績データを返す
-* @details ノードの参照が無かったらorダミーノードであったらassert
-*/
+// イテレータの指す要素を取得する(非const)
 template<typename DATA>
 inline DATA & DoublyLinkedList<DATA>::Iterator::operator*()
 {

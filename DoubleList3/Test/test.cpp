@@ -1,20 +1,23 @@
 /**
 * @file test.cpp
-* @brief 自動テスト
+* @brief 自動テストcpp
 * @author 村上輝
-* @date 2023/10/17/15:00
+* @date 2023/10/19/11:30
 * @details 課題1_3「双方向リストのテンプレート化」
 */
 
 #include "pch.h"
 #include "test.h"
 
+using namespace auto_Test;
 
 namespace ex01_DataStructure
 {
 	namespace chapter1
 	{
 		//=================================== データ数の取得 ===================================
+		typedef EmptyListTest GetDataNumTestEmpty;
+		typedef OneDataListTest GetDataNumTestOneData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合のデータ数の取得テスト
@@ -24,7 +27,7 @@ namespace ex01_DataStructure
 						データ数が0であれば成功です。\n
 						データ数が空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_0_Test_GetDataNum_WhenEmpty)
+		TEST_F(GetDataNumTestEmpty,Test_GetDataNum_WhenEmpty)
 		{
 			EXPECT_EQ(0, m_List->GetDataNum()) << "リストが空である場合のデータの取得に失敗";
 		}
@@ -37,7 +40,7 @@ namespace ex01_DataStructure
 						データ数が1増えていれば成功です。\n
 						データ数が空のリストを使用\n
 		 *//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_1_Test_GetDataNum_InsertEnd)
+		TEST_F(GetDataNumTestEmpty, Test_GetDataNum_InsertEnd)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -53,7 +56,7 @@ namespace ex01_DataStructure
 						リスト末尾への挿入が失敗した際の戻り値を確認しています。\n
 						データ数が増えていなければ成功です。\n
 		//*//***********************************************************************************/
-		TEST(GetDataNumTest, ID_0_2_Test_GetDataNum_InsertEnd_Failed)
+		TEST(GetDataNumTest, Test_GetDataNum_InsertEnd_Failed)
 		{
 			// "末尾への"挿入失敗はメモリ確保失敗時のためここではスキップ
 		}
@@ -66,7 +69,7 @@ namespace ex01_DataStructure
 						データ数が1であれば成功です。\n
 						データ数が空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_3_Test_GetDataNum_Insert)
+		TEST_F(GetDataNumTestEmpty, Test_GetDataNum_Insert)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -82,8 +85,7 @@ namespace ex01_DataStructure
 						データの挿入を行った際の戻り値を確認しています。\n
 						データ数が0であれば成功です。\n
 		*//***********************************************************************************/
-
-		TEST(GetDataNumTest, ID_0_4_Test_GetDataNum_Insert_Failed)
+		TEST(GetDataNumTest, Test_GetDataNum_Insert_Failed)
 		{
 			// 挿入失敗はメモリ確保失敗時のためここではスキップ
 		}
@@ -97,7 +99,7 @@ namespace ex01_DataStructure
 						データ数が0であれば成功です。\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_5_Test_GetDataNum_Remove)
+		TEST_F(GetDataNumTestOneData, Test_GetDataNum_Remove)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -115,7 +117,7 @@ namespace ex01_DataStructure
 						データ数が1であれば成功です。\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_6_Test_GetDataNum_Remove_Failed)
+		TEST_F(GetDataNumTestOneData, Test_GetDataNum_Remove_Failed)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
@@ -132,7 +134,7 @@ namespace ex01_DataStructure
 						データ数がマイナスでなければ成功です。\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_7_Test_GetDataNum_Remove_Empty)
+		TEST_F(GetDataNumTestEmpty, Test_GetDataNum_Remove_Empty)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -144,6 +146,8 @@ namespace ex01_DataStructure
 		// 8はマニュアルテスト
 
 		//=================================== データの挿入 ===================================
+		typedef FiveDataListTest InsertTestFiveDataList;
+		typedef TwoEmptyListTest InsertTestTwoEmptyList;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、挿入した際の挙動
@@ -152,7 +156,7 @@ namespace ex01_DataStructure
 						先頭イテレータ、末尾イテレータを引数で渡した場合について、個別に挙動をチェックすること\n
 						2つの空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(TwoEmptyListTest, ID_0_9_Test_Insert_Empty)
+		TEST_F(InsertTestTwoEmptyList, Test_Insert_Empty)
 		{
 			// 先頭に挿入
 			{
@@ -175,7 +179,7 @@ namespace ex01_DataStructure
 						先頭に要素が挿入され、元々先頭だった要素が２番目になれば成功です。\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_10_Test_Insert_Begin)
+		TEST_F(InsertTestFiveDataList, Test_Insert_Begin)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -204,7 +208,7 @@ namespace ex01_DataStructure
 						イテレータの指す位置に要素が挿入される\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_11_Test_Insert_End)
+		TEST_F(InsertTestFiveDataList, Test_Insert_End)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
@@ -234,7 +238,7 @@ namespace ex01_DataStructure
 						格納済みの要素に影響がないか、期待される位置に要素が格納されているか\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_12_Test_Insert_Other)
+		TEST_F(InsertTestFiveDataList, Test_Insert_Other)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			++it;
@@ -268,7 +272,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_13_Test_Insert_Const)
+		TEST_F(InsertTestFiveDataList, Test_Insert_Const)
 		{
 			// 元のデータのスコア順は01234
 			// 先頭に挿入
@@ -352,7 +356,7 @@ namespace ex01_DataStructure
 						何も起こらなければ成功\n
 						2つの空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(TwoEmptyListTest, ID_0_14_Test_Insert_Unknown)
+		TEST_F(InsertTestTwoEmptyList, Test_Insert_Unknown)
 		{
 			// 二つの空のリストに要素をひとつ挿入しておく
 			m_List->PushBack(g_data[0]);
@@ -360,13 +364,13 @@ namespace ex01_DataStructure
 
 			// リストの参照が無いイテレータを挿入したとき
 			DoublyLinkedList<RecordData>::Iterator it;
-			m_List->Insert(it, g_data[2]);
+			EXPECT_FALSE(m_List->Insert(it, g_data[2]));
 			//データ数が変わっていなければ成功
 			EXPECT_EQ(1, (m_List->GetDataNum()));
 
 			// リスト２のイテレータをリスト１に渡して挿入したとき(別のリストを参照したとき)
 			it = m_List_2->GetBegin();
-			m_List->Insert(it, g_data[2]);
+			EXPECT_FALSE(m_List->Insert(it, g_data[2]));
 			//データ数が変わっていなければ成功
 			EXPECT_EQ(1, (m_List->GetDataNum()));
 		}
@@ -374,6 +378,8 @@ namespace ex01_DataStructure
 		// 15はマニュアルテスト
 
 		//=================================== データの削除 ===================================
+		typedef EmptyListTest RemoveTestEmpty;
+		typedef FiveDataListTest RemoveTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、削除を行った際の挙動
@@ -381,7 +387,7 @@ namespace ex01_DataStructure
 						FALSEで成功\n
 						先頭イテレータ、末尾イテレータを引数で渡した場合について、個別に挙動をチェックすること\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_16_Test_Remove_Empty)
+		TEST_F(RemoveTestEmpty, Test_Remove_Empty)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			EXPECT_FALSE(m_List->Remove(it));
@@ -397,10 +403,11 @@ namespace ex01_DataStructure
 						TRUEで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_17_Test_Remove_Begin)
+		TEST_F(RemoveTestFiveData, Test_Remove_Begin)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
-			m_List->Remove(it);
+
+			EXPECT_TRUE(m_List->Remove(it));
 
 			// 先頭要素がなくなっていれば成功
 			// 元のデータ順が01234なので、1234になっていれば成功
@@ -421,12 +428,13 @@ namespace ex01_DataStructure
 						要素数が変わらなければfalseで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_18_Test_Remove_End)
+		TEST_F(RemoveTestFiveData, Test_Remove_End)
 		{
-			int oldNum = m_List->GetDataNum();
+			const int oldNum = m_List->GetDataNum();
 
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
-			m_List->Remove(it);
+
+			EXPECT_FALSE(m_List->Remove(it));
 
 			//要素数が変わっていなければ成功
 			EXPECT_FALSE((oldNum != m_List->GetDataNum())) << oldNum << m_List->GetDataNum();
@@ -439,7 +447,7 @@ namespace ex01_DataStructure
 						TRUEで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_19_TestRemoveOther)
+		TEST_F(RemoveTestFiveData, TestRemoveOther)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -466,7 +474,7 @@ namespace ex01_DataStructure
 						TRUEで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_20_Test_Remove_Other_Const)
+		TEST_F(RemoveTestFiveData, Test_Remove_Other_Const)
 		{
 			// 元のデータのスコア順は01234
 			// 先頭を削除
@@ -503,7 +511,7 @@ namespace ex01_DataStructure
 				EXPECT_EQ(4, itData.m_score);
 			}
 
-			// 末尾を削除
+			// 末尾イテレータを渡して削除
 			{
 				DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCEnd();
 				m_List->Remove(it);
@@ -511,10 +519,12 @@ namespace ex01_DataStructure
 				it = m_List->GetBegin();
 				RecordData itData = *it;
 
-				//順番が13になっていれば成功
+				//順番が134で変わっていなければ成功
 				EXPECT_EQ(1, itData.m_score);
 				itData = *(++it);
 				EXPECT_EQ(3, itData.m_score);
+				itData = *(++it);
+				EXPECT_EQ(4, itData.m_score);
 			}
 		}
 		/**********************************************************************************//**
@@ -525,9 +535,9 @@ namespace ex01_DataStructure
 						FALSEで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_21_Test_Remove_Unknown)
+		TEST_F(RemoveTestFiveData, Test_Remove_Unknown)
 		{
-			int oldNum = m_List->GetDataNum();
+			const int oldNum = m_List->GetDataNum();
 
 			// 参照の無いイテレータを渡したとき
 			{
@@ -552,6 +562,9 @@ namespace ex01_DataStructure
 
 
 		//=================================== 先頭イテレータの取得 ===================================
+		typedef EmptyListTest GetBeginTestEmpty;
+		typedef OneDataListTest GetBeginTestOneData;
+		typedef FiveDataListTest GetBeginTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、呼び出した際の挙動
@@ -559,12 +572,13 @@ namespace ex01_DataStructure
 						ダミーノードを指すイテレータが返る\n
 						データが空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_23_Test_GetBegin_Empty)
+		TEST_F(GetBeginTestEmpty, Test_GetBegin_Empty)
 		{
-			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
+			DoublyLinkedList<RecordData>::Iterator beginIt = m_List->GetBegin();
+			DoublyLinkedList<RecordData>::Iterator endIt = m_List->GetEnd();
 
-			// イテレータの指すノードがダミーノードかを判別
-			EXPECT_TRUE(it.CheckDummyNode());
+			// 先頭イテレータと末尾イテレータが等しければ成功
+			EXPECT_TRUE(beginIt == endIt);
 		}
 
 		/**********************************************************************************//**
@@ -573,7 +587,7 @@ namespace ex01_DataStructure
 						先頭要素を指すイテレータが返る\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_24_Test_GetBegin_One)
+		TEST_F(GetBeginTestOneData, Test_GetBegin_One)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -588,7 +602,7 @@ namespace ex01_DataStructure
 						先頭要素を指すイテレータが返る\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_25_Test_GetBegin_Any)
+		TEST_F(GetBeginTestFiveData, Test_GetBegin_Any)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -604,7 +618,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_26_Test_GetBegin_AfterInsert)
+		TEST_F(GetBeginTestOneData, Test_GetBegin_AfterInsert)
 		{
 			// 元から入っているデータを確認
 			{
@@ -653,7 +667,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾の要素の削除を行った場合の各ケースについてチェックすること\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_27_Test_GetBegin_AfterRemove)
+		TEST_F(GetBeginTestFiveData, Test_GetBegin_AfterRemove)
 		{
 			// 元のデータのスコア順は01234
 			// 先頭の要素を削除
@@ -692,6 +706,9 @@ namespace ex01_DataStructure
 
 
 		//=================================== 先頭コンストイテレータの取得 ===================================
+		typedef EmptyListTest GetConstBeginTestEmpty;
+		typedef OneDataListTest GetConstBeginTestOneData;
+		typedef FiveDataListTest GetConstBeginTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、呼び出した際の挙動
@@ -699,12 +716,13 @@ namespace ex01_DataStructure
 						ダミーノードを指すイテレータが返る\n
 						データが空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_29_Test_GetConstBegin_Empty)
+		TEST_F(GetConstBeginTestEmpty, Test_GetConstBegin_Empty)
 		{
-			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCBegin();
+			DoublyLinkedList<RecordData>::ConstIterator beginIt = m_List->GetCBegin();
+			DoublyLinkedList<RecordData>::ConstIterator endIt = m_List->GetCEnd();
 
-			// イテレータの指すノードがダミーノードかを判別
-			EXPECT_TRUE(it.CheckDummyNode());
+			// 先頭イテレータと末尾イテレータが等しければ成功
+			EXPECT_TRUE(beginIt == endIt);
 		}
 
 		/**********************************************************************************//**
@@ -713,7 +731,7 @@ namespace ex01_DataStructure
 						先頭要素を指すイテレータが返る\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_30_Test_GetConstBegin_One)
+		TEST_F(GetConstBeginTestOneData, Test_GetConstBegin_One)
 		{
 			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCBegin();
 
@@ -728,7 +746,7 @@ namespace ex01_DataStructure
 						先頭要素を指すイテレータが返る\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_31_Test_GetConstBegin_Any)
+		TEST_F(GetConstBeginTestFiveData, Test_GetConstBegin_Any)
 		{
 			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCBegin();
 
@@ -744,7 +762,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_32_Test_GetConstBegin_AfterInsert)
+		TEST_F(GetConstBeginTestOneData, Test_GetConstBegin_AfterInsert)
 		{
 			// 元から入っているデータを確認
 			{
@@ -793,7 +811,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_33_Test_GetConstBegin_AfterRemove)
+		TEST_F(GetConstBeginTestFiveData, Test_GetConstBegin_AfterRemove)
 		{
 			// 元のデータのスコア順は01234
 			// 先頭の要素を削除
@@ -832,6 +850,9 @@ namespace ex01_DataStructure
 
 
 		//=================================== 末尾イテレータの取得 ===================================
+		typedef EmptyListTest GetEndTestEmpty;
+		typedef OneDataListTest GetEndTestOneData;
+		typedef FiveDataListTest GetEndTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、呼び出した際の挙動
@@ -839,12 +860,13 @@ namespace ex01_DataStructure
 						ダミーノードを指すイテレータが返る\n
 						データが空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_35_Test_GetEnd_Empty)
+		TEST_F(EmptyListTest, Test_GetEnd_Empty)
 		{
-			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
+			DoublyLinkedList<RecordData>::Iterator beginIt = m_List->GetBegin();
+			DoublyLinkedList<RecordData>::Iterator endIt = m_List->GetEnd();
 
-			// イテレータの指すノードがダミーノードかを判別
-			EXPECT_TRUE(it.CheckDummyNode());
+			// 先頭イテレータと末尾イテレータが等しければ成功
+			EXPECT_TRUE(beginIt == endIt);
 		}
 
 		/**********************************************************************************//**
@@ -853,7 +875,7 @@ namespace ex01_DataStructure
 						末尾要素を指すイテレータが返る\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_36_Test_GetEnd_One)
+		TEST_F(GetEndTestOneData, Test_GetEnd_One)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
@@ -868,7 +890,7 @@ namespace ex01_DataStructure
 						末尾要素を指すイテレータが返る\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_37_Test_GetEnd_Any)
+		TEST_F(GetEndTestFiveData, Test_GetEnd_Any)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
@@ -885,7 +907,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_38_Test_GetEnd_AfterInsert)
+		TEST_F(GetEndTestOneData, Test_GetEnd_AfterInsert)
 		{
 			// 元から入っているデータを確認
 			{
@@ -930,7 +952,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に削除を行った場合の各ケースについてチェックすること\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_39_Test_GetEnd_AfterRemove)
+		TEST_F(GetEndTestFiveData, Test_GetEnd_AfterRemove)
 		{
 			// 元のデータがのスコア順は01234
 			// 先頭の要素を削除
@@ -975,6 +997,9 @@ namespace ex01_DataStructure
 
 
 		//=================================== 末尾コンストイテレータの取得 ===================================
+		typedef EmptyListTest GetConstEndTestEmpty;
+		typedef OneDataListTest GetConstEndTestOneData;
+		typedef FiveDataListTest GetConstEndTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空である場合に、呼び出した際の挙動
@@ -982,12 +1007,13 @@ namespace ex01_DataStructure
 						ダミーノードを指すイテレータが返る\n
 						データが空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_0_41_Test_GetConstEnd_Empty)
+		TEST_F(GetConstEndTestEmpty, Test_GetConstEnd_Empty)
 		{
-			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCEnd();
+			DoublyLinkedList<RecordData>::ConstIterator beginIt = m_List->GetCBegin();
+			DoublyLinkedList<RecordData>::ConstIterator endIt = m_List->GetCEnd();
 
-			// イテレータの指すノードがダミーノードかを判別
-			EXPECT_TRUE(it.CheckDummyNode());
+			// 先頭イテレータと末尾イテレータが等しければ成功
+			EXPECT_TRUE(beginIt == endIt);
 		}
 
 		/**********************************************************************************//**
@@ -996,7 +1022,7 @@ namespace ex01_DataStructure
 						末尾要素を指すイテレータが返る\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_42_Test_GetConstEnd_One)
+		TEST_F(GetConstEndTestOneData, Test_GetConstEnd_One)
 		{
 			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCEnd();
 
@@ -1011,7 +1037,7 @@ namespace ex01_DataStructure
 						末尾要素を指すイテレータが返る\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_43_Test_GetConstEnd_Any)
+		TEST_F(GetConstEndTestFiveData, Test_GetConstEnd_Any)
 		{
 			DoublyLinkedList<RecordData>::ConstIterator it = m_List->GetCEnd();
 
@@ -1028,7 +1054,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_0_44_Test_GetConstEnd_AfterInsert)
+		TEST_F(GetConstEndTestOneData, Test_GetConstEnd_AfterInsert)
 		{
 			// 元から入っているデータを確認
 			{
@@ -1073,7 +1099,7 @@ namespace ex01_DataStructure
 						要素列の先頭、中央、末尾に挿入を行った場合の各ケースについてチェックすること\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_0_45_Test_GetConstEnd_AfterRemove)
+		TEST_F(GetConstEndTestFiveData, Test_GetConstEnd_AfterRemove)
 		{
 			// 元のデータがのスコア順は01234
 			// 先頭の要素を削除
@@ -1124,6 +1150,8 @@ namespace ex01_DataStructure
 	namespace chapter2
 	{
 		//===================================イテレータの指す要素の取得 ===================================
+		typedef EmptyListTest GetItTestEmpty;
+		typedef OneDataListTest GetItTestOneData;
 
 		/**********************************************************************************//**
 			@brief		リストの参照がない状態で呼び出した際の挙動
@@ -1131,21 +1159,21 @@ namespace ex01_DataStructure
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_0_Test_GetIt_NoReference)
+		TEST_F(GetItTestEmpty, Test_GetIt_NoReference)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it;
 
 			EXPECT_DEATH(*it, ".*"); // リストが空なのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		Iteratorから取得した要素に対して、値の代入が行えるかをチェック
 			@details	ID:リスト-1\n
 						代入後に再度呼び出し、値が変更されていることを確認\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_1_1_Test_GetIt_Assign)
+		TEST_F(GetItTestOneData, Test_GetIt_Assign)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
@@ -1162,29 +1190,32 @@ namespace ex01_DataStructure
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_3_Test_GetIt_EmptyBegin)
+		TEST_F(GetItTestEmpty, Test_GetIt_EmptyBegin)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
 			EXPECT_DEATH(*it, ".*"); // リストが空なのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		末尾イテレータに対して呼び出した際の挙動
 			@details	ID:リスト-4\n
 						Assert発生\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(OneDataListTest, ID_1_4_Test_GetIt_EmptyEnd)
+		TEST_F(GetItTestOneData, Test_GetIt_EmptyEnd)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
 			EXPECT_DEATH(*it, ".*"); // ダミーノードを指すのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		//===================================イテレータをリストの末尾に向かってひとつ進める===================================
+		typedef EmptyListTest IncrementTestEmpty;
+		typedef OneDataListTest IncrementTestOneData;
+		typedef FiveDataListTest IncrementTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストの参照がない状態で呼び出した際の挙動
@@ -1192,42 +1223,42 @@ namespace ex01_DataStructure
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_5_Test_Increment_NoReference)
+		TEST_F(IncrementTestEmpty, Test_Increment_NoReference)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it;
 
 			EXPECT_DEATH(++it, ".*"); // リストが空なのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		リストが空の際の、先頭イテレータに対して呼び出した際の挙動
 			@details	ID:リスト-6\n
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_6_Test_Increment_TestEmptyBegin)
+		TEST_F(IncrementTestEmpty, Test_Increment_TestEmptyBegin)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
 			EXPECT_DEATH(++it, ".*"); // リストが空なのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		末尾イテレータに対して呼び出した際の挙動
 			@details	ID:リスト-7\n
 						Assert発生\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(OneDataListTest, ID_1_7_Test_Increment_EndIt)
+		TEST_F(IncrementTestOneData, Test_Increment_EndIt)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
 			EXPECT_DEATH(++it, ".*"); // ダミーノードを指すのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		リストに二つ以上の要素がある場合に呼び出した際の挙動
 			@details	ID:リスト-8\n
@@ -1235,7 +1266,7 @@ namespace ex01_DataStructure
 						リストの先頭から末尾まで呼び出しを行い、期待されている要素が格納されているかを確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_8_Test_Increment_Any)
+		TEST_F(IncrementTestFiveData, Test_Increment_Any)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			RecordData itData = *it;
@@ -1259,7 +1290,7 @@ namespace ex01_DataStructure
 						インクリメント呼び出し時の値と、インクリメント実行後の値の両方を確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_9_Test_Increment_PrefIncrement)
+		TEST_F(IncrementTestFiveData, Test_Increment_PrefIncrement)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			RecordData itData = *it;
@@ -1283,7 +1314,7 @@ namespace ex01_DataStructure
 						インクリメント呼び出し時の値と、インクリメント実行後の値の両方を確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_10_Test_Increment_BackIncrement)
+		TEST_F(IncrementTestFiveData, Test_Increment_BackIncrement)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			RecordData itData = *it;
@@ -1302,6 +1333,9 @@ namespace ex01_DataStructure
 
 
 		//===================================イテレータをリストの先頭に向かってひとつ進める===================================
+		typedef EmptyListTest DecrementTestEmpty;
+		typedef OneDataListTest DecrementTestOneData;
+		typedef FiveDataListTest DecrementTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストの参照がない状態で呼び出した際の挙動
@@ -1309,42 +1343,42 @@ namespace ex01_DataStructure
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_11_Test_Decrement_NoReference)
+		TEST_F(DecrementTestEmpty, Test_Decrement_NoReference)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it;
 
 			EXPECT_DEATH(--it, ".*"); // リストの参照がないのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		リストが空の際の、末尾イテレータに対して呼び出した際の挙動
 			@details	ID:リスト-12\n
 						Assert発生\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(EmptyListTest, ID_1_12_Test_Decrement_EmptyEnd)
+		TEST_F(DecrementTestEmpty, Test_Decrement_EmptyEnd)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 
 			EXPECT_DEATH(--it, ".*"); // リストが空なのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		先頭イテレータに対して呼び出した際の挙動
 			@details	ID:リスト-13\n
 						Assert発生\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-#ifdef _DEBUG
-		TEST_F(OneDataListTest, ID_1_13_Test_Decrement_BeginIt)
+		TEST_F(DecrementTestOneData, Test_Decrement_BeginIt)
 		{
+#ifdef _DEBUG
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 
 			EXPECT_DEATH(--it, ".*"); // ダミーノードを指すのでアサートが発生してプログラムが異常終了することを確認
-		}
 #endif //_DEBUG
+		}
 		/**********************************************************************************//**
 			@brief		リストに二つ以上の要素がある場合に呼び出した際の挙動
 			@details	ID:リスト-14\n
@@ -1352,7 +1386,7 @@ namespace ex01_DataStructure
 						リストの末尾から先頭まで呼び出しを行い、期待されている要素が格納されているかを確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_14_Test_Decrement_Any)
+		TEST_F(DecrementTestFiveData, Test_Decrement_Any)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 			RecordData itData = *(--it);
@@ -1376,7 +1410,7 @@ namespace ex01_DataStructure
 						デクリメント呼び出し時の値と、デクリメント実行後の値の両方を確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_15_Test_Decrement_PrefDecrement)
+		TEST_F(DecrementTestFiveData, Test_Decrement_PrefDecrement)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 			RecordData itData = *(--it);
@@ -1400,7 +1434,7 @@ namespace ex01_DataStructure
 						デクリメント呼び出し時の値と、デクリメント実行後の値の両方を確認\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_16_Test_Decrement_BackDecrement)
+		TEST_F(DecrementTestFiveData, Test_Decrement_BackDecrement)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetEnd();
 			RecordData itData = *(--it);
@@ -1419,13 +1453,15 @@ namespace ex01_DataStructure
 
 		//17はマニュアルテスト
 
+		//===================================イテレータのコピーを行う===================================
+		typedef OneDataListTest CopyTestOneData;
 		/**********************************************************************************//**
 			@brief		イテレータのコピーを行う
 			@details	ID:リスト-18\n
 						コピーコンストラクト後の値がコピー元と等しいことをチェック\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_1_18_Test_Copy_Equal)
+		TEST_F(CopyTestOneData, Test_Copy_Equal)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = it;
@@ -1439,13 +1475,15 @@ namespace ex01_DataStructure
 
 		//19はマニュアルテスト
 
+		//===================================イテレータの代入を行う===================================
+		typedef FiveDataListTest AssignTestFiveData;
 		/**********************************************************************************//**
 			@brief		イテレータの代入を行う
 			@details	ID:リスト-20\n
 						代入後の値がコピー元と等しいことをチェック\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_20_Test_Assign_Equal)
+		TEST_F(AssignTestFiveData, Test_Assign_Equal)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetBegin();
@@ -1462,6 +1500,9 @@ namespace ex01_DataStructure
 
 
 		//===================================ふたつのイテレータが同一のものであるか比較===================================
+		typedef EmptyListTest    EqualTestEmpty;
+		typedef OneDataListTest  EqualTestOneData;
+		typedef FiveDataListTest EqualTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空の状態での先頭イテレータと末尾イテレータを比較した際の挙動をチェック
@@ -1469,7 +1510,7 @@ namespace ex01_DataStructure
 						TRUEで成功\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_1_21_Test_Equal_Empty)
+		TEST_F(EqualTestEmpty, Test_Equal_Empty)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetEnd();
@@ -1483,7 +1524,7 @@ namespace ex01_DataStructure
 						TRUEで成功\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_1_22_Test_Equal_Same)
+		TEST_F(EqualTestOneData, Test_Equal_Same)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetBegin();
@@ -1497,7 +1538,7 @@ namespace ex01_DataStructure
 						FALSEで成功\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_23_Test_Equal_Diff)
+		TEST_F(EqualTestFiveData, Test_Equal_Diff)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetBegin();
@@ -1508,13 +1549,16 @@ namespace ex01_DataStructure
 
 
 		//===================================ふたつのイテレータが異なるものであるか比較===================================
+		typedef EmptyListTest    NotEqualTestEmpty;
+		typedef OneDataListTest  NotEqualTestOneData;
+		typedef FiveDataListTest NotEqualTestFiveData;
 
 		/**********************************************************************************//**
 			@brief		リストが空の状態での先頭イテレータと末尾イテレータを比較した際の挙動をチェック
 			@details	ID:リスト-24\n
 						空のリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(EmptyListTest, ID_1_24_Test_NotEqual_Empty)
+		TEST_F(NotEqualTestEmpty, Test_NotEqual_Empty)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetEnd();
@@ -1527,7 +1571,7 @@ namespace ex01_DataStructure
 			@details	ID:リスト-25\n
 						データがひとつ格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(OneDataListTest, ID_1_25_Test_NotEqual)
+		TEST_F(NotEqualTestOneData, Test_NotEqual)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetBegin();
@@ -1540,7 +1584,7 @@ namespace ex01_DataStructure
 			@details	ID:リスト-26\n
 						5つのデータが格納されたリストを使用\n
 		*//***********************************************************************************/
-		TEST_F(FiveDataListTest, ID_1_26_Test_NotEqual_Diff)
+		TEST_F(NotEqualTestFiveData, Test_NotEqual_Diff)
 		{
 			DoublyLinkedList<RecordData>::Iterator it = m_List->GetBegin();
 			DoublyLinkedList<RecordData>::Iterator it2 = m_List->GetBegin();

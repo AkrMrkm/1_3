@@ -1,8 +1,8 @@
 /**
 * @file doublyLinkedList.h
-* @brief 双方向リストクラス
+* @brief 双方向リストクラスヘッダー
 * @author 村上輝
-* @date 2023/10/17/15:00
+* @date 2023/10/19/11:30
 * @details 課題1_3「双方向リストのテンプレート化」
 */
 
@@ -10,6 +10,7 @@
 
 /**
 * @brief 双方向リストクラス
+* @tparam DATA リストが格納するデータ
 */
 template<typename DATA>
 class DoublyLinkedList
@@ -38,7 +39,7 @@ private:
 		* @brief 引数付きコンストラクタ
 		* @param[in] data 要素が持つデータ
 		*/
-		Node(const DATA data) : m_prev(nullptr), m_next(nullptr), m_data(data) {}
+		explicit Node(const DATA data) : m_prev(nullptr), m_next(nullptr), m_data(data) {}
 	};
 
 	//! ダミーノード
@@ -77,40 +78,40 @@ public:
 		* @param[in] node イテレータの指す要素
 		* @param[in] list リストの参照
 		*/
-		inline ConstIterator(Node* node, const DoublyLinkedList* list);
+		inline explicit ConstIterator(Node* node, const DoublyLinkedList* list);
 
 		/**
 		* @brief イテレータの先頭に向かってひとつ進める(前置)
 		* @return 先頭にひとつ進めたイテレータを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline ConstIterator& operator--();
 
 		/**
 		* @brief イテレータの先頭に向かってひとつ進める(後置)
 		* @return 先頭にひとつ進めたイテレータを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline ConstIterator operator--(int);
 
 		/**
 		* @brief イテレータの末尾に向かってひとつ進める(前置)
 		* @return 末尾にひとつ進めたイテレータを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline ConstIterator& operator++();
 
 		/**
 		* @brief イテレータの末尾に向かってひとつ進める(後置)
 		* @return 末尾にひとつ進めたイテレータを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline ConstIterator operator++(int);
 
 		/**
 		* @brief イテレータの指す要素を取得する(const)
-		* @return イテレータの指す成績データを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @return イテレータの指すデータを返す
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline const DATA operator*() const;
 
@@ -140,13 +141,6 @@ public:
 		* @return イテレータの指す要素が異なればtrueを返す
 		*/
 		inline bool operator!=(const ConstIterator& it);
-
-		/**
-		* @brief イテレータの指すノードがダミーノードか判別する
-		* @return もしダミーノードであればtrueを返す
-		* @details テストでダミーノードと比較する際に使用
-		*/
-		inline bool CheckDummyNode();
 	};
 
 	/**
@@ -166,12 +160,12 @@ public:
 		* @param[in] node イテレータの指す要素
 		* @param[in] list リストの参照
 		*/
-		inline Iterator(Node* node, const DoublyLinkedList* list);
+		inline explicit Iterator(Node* node, const DoublyLinkedList* list);
 
 		/**
 		* @brief イテレータの指す要素を取得する(非const)
 		* @return イテレータの指す成績データを返す
-		* @details ノードの参照が無かったらorダミーノードであったらassert
+		* @details ノードの参照が無かったらor末尾イテレータであったらassert
 		*/
 		inline DATA& operator*();
 	};
@@ -179,7 +173,7 @@ public:
 	/**
 	* @brief 双方向リストクラスのコンストラクタ
 	* @details データ数、ダミーノードを初期化\n
-			   リストが空の場合、ダミーノードの前後はダミーノード自身を参照\n
+	*		   リストが空の場合、ダミーノードの前後はダミーノード自身を参照\n
 	*/
 	inline DoublyLinkedList();
 
@@ -188,6 +182,12 @@ public:
 	* @details 先頭から末尾までdelete
 	*/
 	virtual inline ~DoublyLinkedList();
+
+	/**
+	* @brief コピーコンストラクタ
+	* @param[in] list コピー元の双方向リスト
+	*/
+	inline DoublyLinkedList(const DoublyLinkedList& list) = delete;
 
 	/**
 	* @brief データ数の取得
@@ -215,32 +215,32 @@ public:
 	* @brief データの削除
 	* @param[in] it 削除したい位置のイテレータ
 	* @return 削除に失敗したらfalse、成功したらtrueを返す
-	* @details イテレータの指すノードを削除\n
-				データ数が0、イテレータの指すノードがダミーノード、別リストを指すイテレータであれば何も行わない\n
+	* @details  イテレータの指すノードを削除\n
+	*			データ数が0、イテレータの指すノードが末尾イテレータ、別リストを指すイテレータであれば何も行わない\n
 	*/
 	inline bool Remove(ConstIterator& it);
 
 	/**
 	* @brief 先頭イテレータ取得
-	* @return ダミーノードの次のノード(先頭のイテレータを返す)
+	* @return 先頭のイテレータを返す
 	*/
 	inline Iterator GetBegin();
 
 	/**
 	* @brief 先頭コンストイテレータ取得
-	* @return ダミーノードの次のノード(先頭のコンストイテレータを返す)
+	* @return  先頭のコンストイテレータを返す 
 	*/
 	inline ConstIterator GetCBegin() const;
 
 	/**
 	* @brief 末尾イテレータ取得
-	* @return ダミーノードを返す
+	* @return 末尾のイテレータを返す
 	*/
 	inline Iterator GetEnd();
 
 	/**
 	* @brief 末尾コンストイテレータ取得
-	* @return ダミーノードを返す
+	* @return 末尾のコンストイテレータを返す
 	*/
 	inline ConstIterator GetCEnd() const;
 };

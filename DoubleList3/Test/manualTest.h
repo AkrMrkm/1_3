@@ -3,8 +3,8 @@
 * @file manualTest.h
 * @brief 手動テストヘッダー
 * @author 村上輝
-* @date 2023/10/17/15:00
-* @details 課題1_3「双方向リストのテンプレート化」\n
+* @date 2023/10/19/11:30
+* @details  課題1_3「双方向リストのテンプレート化」\n
 *			define定義\n
 */
 
